@@ -13,3 +13,5 @@ scrapy startproject tutorial
 sudo pip install --upgrade pip
 sudo pip install --upgrade Scrapy
 scrapy startproject tutorial
+
+# https://community.c9.io/t/cannot-install-scrapy/14172/6
