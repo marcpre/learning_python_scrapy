@@ -4,5 +4,9 @@
 
 `scrapy shell 'http://quotes.toscrape.com/'`
 
+## Write to csv
 
---> 2/014
+`scrapy crawl quotes -o items.csv`
+
+
+--> 2/016
