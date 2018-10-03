@@ -8,5 +8,17 @@
 
 `scrapy crawl quotes -o items.csv`
 
+`scrapy crawl quotes -o items.json`
+
+`scrapy crawl quotes -o items.xml`
+
+## Runspider command
+
+Use it to create a quick crawler and run it straight as a script:
+
+`~/workspace (master) $ scrapy runspider quotes.py`
+
+
+
 
 --> 2/016
