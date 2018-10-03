@@ -18,7 +18,9 @@ Use it to create a quick crawler and run it straight as a script:
 
 `~/workspace (master) $ scrapy runspider quotes.py`
 
+## Start Crawler
+
+`scrapy crawl books`
 
 
-
---> 2/016
+--> 13/025
