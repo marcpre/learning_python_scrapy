@@ -22,5 +22,9 @@ Use it to create a quick crawler and run it straight as a script:
 
 `scrapy crawl books`
 
+## Pass argument to scrapy
 
---> 13/025
+`scrapy crawl books -a category="http://books.toscrape.com/catalogue/category/books/philosophy_7/index.html"`
+
+
+--> 15/030
