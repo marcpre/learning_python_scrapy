@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import csv
+import glob
+from openpyxl import Workbook
 from scrapy import Spider
 from scrapy.http import FormRequest
 
@@ -23,3 +26,20 @@ class QuotesSpider(Spider):
 
         print h1_tag
         print tags
+        yield {
+            "H1 Tag": h1_tag,
+            "Tag": tags
+        }
+        
+    def close(self, reason):
+        csv_file = max(glob.iglob('*.csv'), key=os.path.getctime)
+        
+        wb = Workbook()
+        ws = wb.active
+        
+        with open(csv_file, 'r') as f:
+            for row in csv.reader(f):
+                ws.append(row)
+        
+        wb.save(csv_file.replace('.csv', '') + '.xlsx')
+        
