@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import csv
 import glob
+import MySQLdb
 from scrapy import Spider
 from scrapy.http import Request
 
@@ -20,7 +22,7 @@ class BooksSpider(Spider):
             absolute_url = response.urljoin(book)
             yield Request(absolute_url, callback=self.parse_book)
 
-        # process next page
+        # # process next page
         # next_page_url = response.xpath('//a[text()="next"]/@href').extract_first()
         # absolute_next_page_url = response.urljoin(next_page_url)
         # yield Request(absolute_next_page_url)
@@ -40,7 +42,7 @@ class BooksSpider(Spider):
 
         # product information data points
         upc = product_info(response, 'UPC')
-        product_type =  product_info(response, 'Product Type')
+        product_type = product_info(response, 'Product Type')
         price_without_tax = product_info(response, 'Price (excl. tax)')
         price_with_tax = product_info(response, 'Price (incl. tax)')
         tax = product_info(response, 'Tax')
@@ -49,15 +51,26 @@ class BooksSpider(Spider):
 
         yield {
             'title': title,
-            'price': price,
-            'image_url': image_url,
             'rating': rating,
-            'description': description,
             'upc': upc,
-            'product_type': product_type,
-            'price_without_tax': price_without_tax,
-            'price_with_tax': price_with_tax,
-            'tax': tax,
-            'availability': availability,
-            'number_of_reviews': number_of_reviews
-        }
+            'product_type': product_type}
+
+    def close(self, reason):
+        csv_file = max(glob.iglob('*.csv'), key=os.path.getctime)
+
+        mydb = MySQLdb.connect(host='localhost',
+                               user='root',
+                               passwd='',
+                               db='books_db')
+        cursor = mydb.cursor()
+
+        csv_data = csv.reader(file(csv_file))
+
+        row_count = 0
+        for row in csv_data:
+            if row_count != 0:
+                cursor.execute('INSERT IGNORE INTO books_table(rating, product_type, upc, title) VALUES(%s, %s, %s, %s)', row)
+            row_count += 1
+
+        mydb.commit()
+        cursor.close()
