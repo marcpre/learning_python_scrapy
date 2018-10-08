@@ -32,5 +32,12 @@ Use it to create a quick crawler and run it straight as a script:
 `sudo pip install openpyxl`
 
 
+## Create project
 
---> 18/046
+`scrapy startproject testproject`
+
+`scrapy genspider testspider "www.example.com"`
+
+
+
+--> 20/050
