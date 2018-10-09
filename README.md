@@ -38,6 +38,12 @@ Use it to create a quick crawler and run it straight as a script:
 
 `scrapy genspider testspider "www.example.com"`
 
+## Change User Agent
+
+scrapy crawl quotes -s USER_AGENT="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
+
+* How to find out your user agent?
+  * Google "whats my user agent"
 
 
 --> 20/050
