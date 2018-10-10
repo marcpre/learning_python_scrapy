@@ -46,4 +46,4 @@ scrapy crawl quotes -s USER_AGENT="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebK
   * Google "whats my user agent"
 
 
---> 20/050
+--> 20/052
