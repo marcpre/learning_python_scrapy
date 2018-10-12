@@ -11,17 +11,15 @@ class BtctalkspiderSpider(scrapy.Spider):
     def parse(self, response):
         urls = response.xpath("//a/@href").extract()
         for i in range(self.max_uid):
-            # https://bitcointalk.org/index.php?action=profile;u=1
+            # scrapy shell "https://bitcointalk.org/index.php?action=profile;u=1"
             yield Request('https://bitcointalk.org/index.php?action=profile;u=%d' % i, callback=self.parse_application)
     
     def parse_application(self, response):
-        subject_name = response.xpath('//title/text()').extract_first()
-        subject_name = subject_name.split(' | ')
-        subject_name = subject_name[0]
+        userName = response.xpath('//td[normalize-space(.)="Name:"]/following-sibling::td/text()').extract()
+
 
         yield {
-            'subject_name': subject_name,
-            'absolute_course_url': absolute_course_url
+            'userName': userName
         }
 #
 #    def start_requests(self):
