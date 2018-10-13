@@ -9,7 +9,7 @@ class EplanningSpider(Spider):
 
     def parse(self, response):
         urls = response.xpath("//a/@href").extract()
-        for url in urls:
+        for url in urls: #TODO fix this later
             if '#' == url:
                 pass
             else:
@@ -23,4 +23,14 @@ class EplanningSpider(Spider):
         yield FormRequest.from_response(response, formdata={'RdoTimeLimit': '42'}, dont_filter=True, formxpath='(//form)[2]', callback=self.parse_pages)
 
     def parse_pages(self, response):
+        application_urls = response.xpath('//td/a/@href').extract()
+        
+        for url in application_urls: 
+            url = response.urljoin(url)
+            yield Request(url, callback=self.parse_items)
+        next_page = response.xpath('//*[@rel="next"]/@href').extract_first()
+        absolute_next_page = response.urljoin(next_page)
+        yield Request(absolute_next_page, callback=self.parse_pages)
+            
+    def parse_items(self, response):
         pass
