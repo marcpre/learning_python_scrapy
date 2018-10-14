@@ -35,6 +35,28 @@ class EplanningSpider(Spider):
     def parse_items(self, response):
         agent_btn = response.xpath('//*[@value="Agent"]/@style').extract_first()
         if 'display: inline; visibility: visible;' in agent_btn:
-            pass
+            name = response.xpath('//tr[th="Name :"]/td/text()').extract_first()
+            
+            address_first = response.xpath('//tr[th="Address :"]/td/text()').extract()
+            address_second = response.xpath('//tr[th="Address :"]/following-sibling:tr/td/text()').extract()[0:3]
+            address = address_first + address_first
+            
+            phone = response.xpath('//tr[th="Phone :"]/td/text()').extract_first()
+            
+            fax = response.xpath('//tr[th="Fax :"]/td/text()').extract_first()
+
+            email = response.xpath('//tr[th="e-mail :"]/td/a/text()').extract_first()
+            
+            url = response.url
+            
+            yield {
+                'name': name,
+                'address': address,
+                'phone': phone,
+                'fax': fax,
+                'email': email,
+                'url': url
+            }
+
         else: 
             self.logger.info('Agent button not found on page, passing invalid url.')
