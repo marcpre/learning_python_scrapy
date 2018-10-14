@@ -33,4 +33,8 @@ class EplanningSpider(Spider):
         yield Request(absolute_next_page, callback=self.parse_pages)
             
     def parse_items(self, response):
-        pass
+        agent_btn = response.xpath('//*[@value="Agent"]/@style').extract_first()
+        if 'display: inline; visibility: visible;' in agent_btn:
+            pass
+        else: 
+            self.logger.info('Agent button not found on page, passing invalid url.')
