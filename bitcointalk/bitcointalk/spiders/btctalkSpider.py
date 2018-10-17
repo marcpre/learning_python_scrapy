@@ -6,7 +6,7 @@ from scrapy.http import Request
 class BtctalkspiderSpider(scrapy.Spider):
     name = 'btctalkSpider'
     allowed_domains = ['bitcointalk.org']
-    max_uid = 400
+    max_uid = 10
 
     def parse(self, response):
         urls = response.xpath("//a/@href").extract()
@@ -21,15 +21,3 @@ class BtctalkspiderSpider(scrapy.Spider):
         yield {
             'userName': userName
         }
-#
-#    def start_requests(self):
-#        for i in range(self.max_cid):
-#            yield Request('http://www.saylor.org/site/syllabus.php?cid=%d' % i,
-#                    callback=self.parse_syllabi)
-
-#    def parse_syllabi(self, response):
-#        syllabi = SyllabiItem()
-#        syllabi['url'] = response.url
-#        syllabi['body'] = response.body
-
-#        return syllabi

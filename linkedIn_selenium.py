@@ -32,4 +32,18 @@ linkedin_urls = driver.find_element_by_tag_name('cite')
 linkedin_urls = [url.text for url in linkedin_urls]
 sleep(0.5)
 
+for linkedin_url in linkedin_urls:
+    driver.get(linkedin_url)
+    sleep(5)
+    
+    sel = Selector(text=driver.page_source)
+    
+    name = sel.xpath('//h1/text()').extract_first()
 
+    job_title = sel.xpath('//h2/text()').extract_first()
+
+
+
+
+
+driver.quit()
